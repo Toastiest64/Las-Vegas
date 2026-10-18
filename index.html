@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title></title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #000000; }
+    #game { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: #000000; }
+    #unity-canvas { display: block; width: 100%; height: 100%; background: #000000; outline: none; }
+    #loading { position: fixed; inset: 0; z-index: 3; display: grid; place-items: center; color: #fff; background: #000000; font-family: "Comic Sans MS", "Comic Sans", cursive; font-size: clamp(24px, 4vw, 48px); pointer-events: none; }
+  </style>
+</head>
+<body>
+  <main id="game"><canvas id="unity-canvas" tabindex="-1"></canvas></main>
+  <div id="loading">Loading</div>
+  <script src="Build/Las-Vegas.loader.js"></script>
+  <script>
+    const canvas = document.getElementById("unity-canvas");
+    const loading = document.getElementById("loading");
+    const buildUrl = "Build";
+    const config = {
+      arguments: [],
+      dataUrl: buildUrl + "/Las-Vegas.data.unityweb",
+      frameworkUrl: buildUrl + "/Las-Vegas.framework.js.unityweb",
+      codeUrl: buildUrl + "/Las-Vegas.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Kiloo Games",
+      productName: "Subway Surf",
+      productVersion: "1.56.0"
+    };
+    createUnityInstance(canvas, config, function () {}).then(function (instance) {
+      loading.style.display = "none";
+    }).catch(function (error) {
+      loading.textContent = "Game failed to load: " + error;
+      console.error(error);
+    });
+  </script>
+</body>
+</html>
